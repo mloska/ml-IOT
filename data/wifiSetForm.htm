@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+		<body>
+				<div class="form-ml" margin-bottom="5">
+				test
+				</div>
+				</br>
+			<div class="form-ml">
+				<h3>Loska IOT Settings</h3>
+				<div>
+				  <form action="/set_wifi" method="POST">
+					<label for="ssid">WiFI SSID:</label>
+					<input type="text" name="ssid">
+				
+					<label for="pass">WIFI Password:</label>
+					<input type="password" name="pass">
+
+					<!-- <label for="country">Country</label>
+					<select id="country" name="country">
+					  <option value="australia">Australia</option>
+					  <option value="canada">Canada</option>
+					  <option value="usa">USA</option>
+					</select> -->
+				  
+					<input type="submit" value="Submit">
+				  </form>
+				</div>
+				</br>
+				<button class="gray" onclick="location.href='/'">
+					Main Menu
+				</button>
+			</div>
+			</br>
+		<div class="form-ml"><center>Report errors to mloska@gmail.com</center></div>
+		</body>
+  <script src="options.js"></script>
+</html>	

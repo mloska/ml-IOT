@@ -25,7 +25,7 @@
 #include <ArduinoOTA.h>
 #include <FS.h> // file system - SPIFFS
 #include <LittleFS.h>
-#include "ML-IOT.h"
+#include "ml-IOT.h"
 
 // ------------------ G L O B A L S --------------------
 //network related

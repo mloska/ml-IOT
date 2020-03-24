@@ -2,6 +2,7 @@
 bool WebServer_init()
 {
   webServer.stop();
+  webServer.on("/loadForm", HTTP_GET, handle_loadFormData);
   webServer.on ( "/options.js",  []() {
 //    ReadStringStreamFromFile("/test.txt", temp, sizeof(temp));
 //    replaceTagWithString(result, sizeof(result), temp, "[ssid]", app_conf.ssid);

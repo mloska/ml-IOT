@@ -11,6 +11,32 @@ void handle_reset() {
   ESP.restart();
 }
 
+void handle_loadFormData() {
+  DebugSerialPrintln("-handle_loadFormData()");
+  if (!webServer.hasArg("param")) {
+    webServer.send(400, "text/plain", "400: Invalid Request");
+    Serial.println( "Invalid Request 1");
+  }
+  else {
+    char temp2[20];
+    webServer.arg("param").toCharArray(temp2, sizeof(temp2));
+    if (strcmp (temp2, "ssid")==0){
+      webServer.send ( 200, "text/plain", app_conf.ssid);
+      Serial.println( "ssid");
+    }
+    else if (strcmp (temp2, "pass")==0){
+       webServer.send ( 200, "text/plain", app_conf.pass);
+       Serial.println( "pass");
+    }
+    else{
+      webServer.send(400, "text/plain", "400: Invalid Request");
+      Serial.println( "400: Invalid Request");
+      
+    }
+      
+  }
+
+}
 void handle_set_wifi() {
   DebugSerialPrintln("-handle_set_wifi()");
   if (!webServer.hasArg("ssid") || !webServer.hasArg("pass") ) {

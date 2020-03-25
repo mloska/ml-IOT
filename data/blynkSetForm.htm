@@ -2,25 +2,32 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
-		<body>
-				
-			<div class="form-ml">
-				<h3>Loska IOT Settings</h3>
-				<div>
-				  <form action="/set_blynk" method="POST">
-					<label for="blynk">Blynk Auth Token:</label>
-					<input type="text" class=" name="blynk">
-				  
-					<input type="submit" value="Submit">
-				  </form>
-				</div>
-				</br></br>
-				<button class="gray" onclick="location.href='/'">
-					Main Menu
-				</button>
+	<body>
+			
+		<div class="form-ml">
+			<h3>Loska IOT Settings</h3>
+			<div>
+			  <form action="/set_blynk" method="POST">
+				<label for="blynk">Blynk Auth Token:</label>
+				<input type="text" class=" name="blynk">
+			  
+				<input type="submit" value="Submit">
+			  </form>
 			</div>
-			</br>
-		<div class="form-ml"><center>Report errors to mloska@gmail.com</center></div>
-		</body>
-  <script src="options.js"></script>
+			</br></br>
+			<button class="gray" onclick="location.href='/'">
+				Main Menu
+			</button>
+		</div>
+		</br>
+	<div class="form-ml"><center>Report errors to mloska@gmail.com</center></div>
+			<script type="text/javascript" src="loadFormData.js"></script>
+
+	<script type="text/javascript">
+	function codeAddress() {	
+		loadFormData("blynk");
+	}
+	window.onload = codeAddress;
+	</script>
+	</body>
 </html>	

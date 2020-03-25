@@ -55,11 +55,11 @@ void handle_set_wifi() {
 
 void handle_set_mqtt() {
   DebugSerialPrintln("-handle_set_mqtt()");
-  if (!webServer.hasArg("mqtt") ) {
+  if (!webServer.hasArg("mqttServerAddress") ) {
     webServer.send(400, "text/plain", "400: Invalid Request");         // The request is invalid, so send HTTP status 400
   }
   else {
-    webServer.arg("mqtt").toCharArray(app_conf.mqttServerAddress, sizeof(app_conf.mqttServerAddress));
+    webServer.arg("mqttServerAddress").toCharArray(app_conf.mqttServerAddress, sizeof(app_conf.mqttServerAddress));
     webServer.arg("mqttPrefix").toCharArray(app_conf.mqttPrefix, sizeof(app_conf.mqttPrefix));
     saveConfig();
   }

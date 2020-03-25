@@ -2,25 +2,35 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
-		<body>
-				
-			<div class="form-ml">
-				<h3>Loska IOT Settings</h3>
-				<div>
-				  <form action="/set_mqtt" method="POST">
-					<label for="ssid">MQTT Broker Address:</label>
-					<input type="text"  name="mqtt">
-
-					<input type="submit" value="Submit">
-				  </form>
-				  
-				</div>
-				</br>
-				<button class="gray" onclick="location.href='/'">
-					Main Menu
-				</button>
+	<body>
+			
+		<div class="form-ml">
+			<h3>Loska IOT Settings</h3>
+			<div>
+			  <form action="/set_mqtt" method="POST">
+				<label>MQTT Broker Address:</label>
+				<input type="text"  name="mqttServerAddress">
+				<label>MQTT Topic Prefix:</label>
+				<input type="text"  name="mqttPrefix">
+				<input type="submit" value="Submit">
+			  </form>
+			  
 			</div>
 			</br>
+			<button class="gray" onclick="location.href='/'">
+				Main Menu
+			</button>
+		</div>
+		</br>
 		<div class="form-ml"><center>Report errors to mloska@gmail.com</center></div>
-  <script src="options.js"></script>
+		<script type="text/javascript" src="loadFormData.js"></script>
+
+		<script type="text/javascript">
+			function codeAddress() {	
+				loadFormData("mqttServerAddress");
+				loadFormData("mqttPrefix");
+			}
+			window.onload = codeAddress;
+		</script>
+	</body>
 </html>	

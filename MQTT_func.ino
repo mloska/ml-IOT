@@ -8,7 +8,8 @@ PubSubClient client(wifiClient);
 
 long mqttLastConnAttempt = 0;
 byte mqtt_send_buffer[64];
-
+char locked_text[] = "LOCKED";
+char unlocked_text[] = "UNLOCKED";
 
 
 // ------------------ I N I T --------------------------
@@ -21,7 +22,7 @@ void MQTT_init() {
 
   strcpy(app_conf.mqttStatus_topic, "/state");
   appendSubtopic(app_conf.mqttStatus_topic);
-
+  MQTT_announceLockState();
 
   Serial.println("Where to listed for state update:");
   Serial.println(app_conf.mqttStatus_topic);
@@ -45,12 +46,14 @@ void mqttSubCallback(char* topic, byte* payload, unsigned int length) {
 void MQTT_announceLockState() {
   CharToByte(locked_text, mqtt_send_buffer, 6);
   client.publish(app_conf.mqttStatus_topic, mqtt_send_buffer, 6);
+  Serial.println("Announced LOCKED");
 }
 void MQTT_announceUNLockState() {
-  CharToByte(unlocked_text, mqtt_send_buffer, 6);
-  client.publish(app_conf.mqttStatus_topic, mqtt_send_buffer, 6);
-  Serial.println("takito status:");
-  Serial.println(app_conf.mqttStatus_topic);
+  CharToByte(unlocked_text, mqtt_send_buffer, 8);
+  client.publish(app_conf.mqttStatus_topic, mqtt_send_buffer, 8);
+  Serial.println("Announced UNLOCKED");
+  
+
 }
 boolean mqttReconnect() {
   client.disconnect();

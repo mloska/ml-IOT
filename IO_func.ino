@@ -8,8 +8,7 @@ bool relay_state = false;
 bool interrupt_state = false;
 
 
-char locked_text[] = "LOCKED";
-char unlocked_text[] = "UNLOCKED";
+
 
 // Pin Settings
 int relay_pin = D1;
@@ -19,7 +18,7 @@ int interruptPin = D2; // Pin where button is connected ( pull-up implemented, s
 void IO_init() {
   pinMode(relay_pin, OUTPUT); //relay output
   pinMode(interruptPin, INPUT_PULLUP);
-  
+
   attachInterrupt(digitalPinToInterrupt(interruptPin), handleInterrupt, FALLING);
 
 }
@@ -38,7 +37,7 @@ void handleInterrupt() {
 
 }
 void IO_openGate(long timeToOpen) {
-MQTT_announceUNLockState();
+  MQTT_announceUNLockState();
   timer_relay = millis() + timeToOpen;
   relay_state = true;
   digitalWrite(relay_pin, HIGH);
@@ -48,11 +47,14 @@ void IO_closeGate() {
   Serial.println("Relay switched off");
   relay_state = false;
   digitalWrite(relay_pin, LOW);
-MQTT_announceLockState();
+  MQTT_announceLockState();
 }
 void IO_mqttInterrupt(String PDU) {
   if (PDU == "UNLOCKED")
     IO_openGate(4000);
+  else
+    MQTT_announceLockState();
+
 }
 
 void IO_loop() {

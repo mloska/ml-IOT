@@ -1,7 +1,11 @@
-String APname; // Stores default ESP Name
+
 // ------------------ D E F I N E S --------------------
+String APname; // Stores default ESP Name
+FS* filesystem = &LittleFS;   
+
 
 // ------------------ I N I T --------------------------
+// Open the reference to filesystem
 void SPIFFS_init() {
   DebugSerialPrintln(F("-SPIFFS_init()"));
   filesystem->begin();
@@ -14,8 +18,8 @@ void SPIFFS_init() {
     }
     Serial.printf("\n");
   }
-
 }
+
 
 
 void Config_init() {
@@ -24,13 +28,10 @@ void Config_init() {
   APname = "Loska IOT (";
   APname += String(ESP.getChipId(), HEX);
   APname += ')';
-
   strlcpy(app_conf.devName, APname.c_str(), sizeof(app_conf.devName));
-  strlcpy(app_conf.mqttPrefix, String(ESP.getChipId(), HEX).c_str(), sizeof(app_conf.mqttPrefix));
-
-
+  strlcpy(app_conf.mqttPrefix, "IOT", sizeof(app_conf.mqttPrefix));
+  
   loadConfigFile("/config.txt", app_conf);
-  DebugSerialPrintln(F("Read:"));
 }
 
 
@@ -107,7 +108,7 @@ bool saveConfig() {
   if (app_conf.devName[0] != '\0')
     root["devName"] = app_conf.devName;
   else
-    root["devName"] = APname.c_str();
+    root["devName"] = "maryjno";
   if (app_conf.mqttPrefix[0] != '\0')
     root["mqttPrefix"] = app_conf.mqttPrefix;
   else

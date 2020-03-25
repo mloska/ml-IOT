@@ -29,7 +29,7 @@
 
 // ------------------ G L O B A L S --------------------
 //network related
-FS* filesystem = &LittleFS;         
+      
 ESP8266WebServer webServer(80);
 
 char result[1024];                                       // this stores results of string functions (declared globaly to avoid dyn. mem. allocations) #todo - make it more neat

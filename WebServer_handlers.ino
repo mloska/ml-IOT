@@ -20,20 +20,24 @@ void handle_loadFormData() {
   else {
     char temp2[20];
     webServer.arg("param").toCharArray(temp2, sizeof(temp2));
-    if (strcmp (temp2, "ssid")==0){
+    if (strcmp (temp2, "ssid") == 0)
       webServer.send ( 200, "text/plain", app_conf.ssid);
-      Serial.println( "ssid");
-    }
-    else if (strcmp (temp2, "pass")==0){
-       webServer.send ( 200, "text/plain", app_conf.pass);
-       Serial.println( "pass");
-    }
-    else{
+    else if (strcmp (temp2, "pass") == 0)
+      webServer.send ( 200, "text/plain", app_conf.pass);
+    else if (strcmp (temp2, "devName") == 0)
+      webServer.send ( 200, "text/plain", app_conf.devName);
+    else if (strcmp (temp2, "blynk") == 0)
+      webServer.send ( 200, "text/plain", app_conf.blynk);
+          else if (strcmp (temp2, "mqttServerAddress") == 0)
+      webServer.send ( 200, "text/plain", app_conf.mqttServerAddress);
+          else if (strcmp (temp2, "mqttPrefix") == 0)
+      webServer.send ( 200, "text/plain", app_conf.mqttPrefix);
+    else {
       webServer.send(400, "text/plain", "400: Invalid Request");
       Serial.println( "400: Invalid Request");
-      
+
     }
-      
+
   }
 
 }

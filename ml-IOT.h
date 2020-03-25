@@ -8,9 +8,10 @@ struct Conf {
   char mqttServerAddress[20];
   char devName[30];
   int measurementTime_min;
-  char mqttPrefix[20];
+  char mqttPrefix[40];
   char *mqttSubTopic[16];
-  int mqttSubTopicCount;   
+  int mqttSubTopicCount;  
+ char mqttStatus_topic[60];
 } ;
 
 struct Stat {

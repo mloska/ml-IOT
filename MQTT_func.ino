@@ -5,10 +5,9 @@ PubSubClient client(wifiClient);
 
 
 //mqtt content buffer
-char status_topic[128] = "/state";
-byte mqtt_send_buffer[64];
-long mqttLastConnAttempt = 0;
 
+long mqttLastConnAttempt = 0;
+byte mqtt_send_buffer[64];
 
 
 
@@ -20,34 +19,39 @@ void MQTT_init() {
   app_conf.mqttSubTopic[0] = "/setRelay1";
   app_conf.mqttSubTopicCount = 1;
 
+  strcpy(app_conf.mqttStatus_topic, "/state");
+  appendSubtopic(app_conf.mqttStatus_topic);
+
+
+  Serial.println("Where to listed for state update:");
+  Serial.println(app_conf.mqttStatus_topic);
+
 }
 
 void mqttSubCallback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Received topic:");
   Serial.println(topic);
-
-  mqttReceivedCallback(topic, payload, length);
-}
-
-void mqttReceivedCallback(char* topic, byte* payload, unsigned int length) {
   //DO NOT DELETE this function
   char PDU[length];
   for (unsigned int i = 0; i < (length); i++) {
     PDU[i] = char(payload[i]);
     PDU[i + 1] = '\0';
   }
-  //strlcpy(char *destination, const char *source, size_t size);
-
-
   Serial.println("MQTT payload received:");
-  Serial.println(PDU);
-
-  CharToByte("good", mqtt_send_buffer, 8);
-  client.publish(status_topic, mqtt_send_buffer, 8);
-
+  Serial.println(String(PDU));
+  IO_mqttInterrupt(PDU);
 }
 
-
+void MQTT_announceLockState() {
+  CharToByte(locked_text, mqtt_send_buffer, 6);
+  client.publish(app_conf.mqttStatus_topic, mqtt_send_buffer, 6);
+}
+void MQTT_announceUNLockState() {
+  CharToByte(unlocked_text, mqtt_send_buffer, 6);
+  client.publish(app_conf.mqttStatus_topic, mqtt_send_buffer, 6);
+  Serial.println("takito status:");
+  Serial.println(app_conf.mqttStatus_topic);
+}
 boolean mqttReconnect() {
   client.disconnect();
   if (client.connect(app_conf.devName)) {
@@ -58,6 +62,7 @@ boolean mqttReconnect() {
       client.subscribe(app_conf.mqttSubTopic[i]);
     }
     Serial.println("Connected to MQTT Server");
+    MQTT_announceLockState();
   }
   return client.connected();
 }
@@ -81,7 +86,7 @@ void MQTT_Loop() {
 }
 
 void appendSubtopic(char *inputTopic) {
-  char temp_topic[128] = " ";
+  char temp_topic[128] = "IOT";
   strcpy(temp_topic, app_conf.mqttPrefix);
   strcat(temp_topic, inputTopic);
   strcpy(inputTopic, temp_topic);

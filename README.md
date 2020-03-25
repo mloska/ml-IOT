@@ -13,7 +13,7 @@ Features:
 Installation:
 - Compile the code and flash it to ESP
 - Use Linux OS to upload contents of DATA folder to ESP file system (SPIFFS) 
-    Use this command to upload data when CD in the DATA folder " for file in `\ls -A1`; do curl -F "file=@$PWD/$file" 192.168.10.1/edit; "
+    Use this command to upload data when CD in the DATA folder: for file in `\ls -A1`; do curl -F "file=@$PWD/$file" 192.168.10.1/edit; done
    
 test
    

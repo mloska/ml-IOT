@@ -39,21 +39,23 @@ Conf app_conf;
 Stat app_status;
 // ------------------ S E T U P ----------------------
 void setup() {
-  SERIAL_init();
-  IO_init(); 
+  SERIAL_init(); 
   SPIFFS_init();
   Config_init();
   WIFI_init();
   WebServer_init();
-  OTA_init();
   MQTT_init();
+    IO_init();
+  OTA_init();
+  
 }
 // ------------------ L O O O P ----------------------
 void loop() {
   // put your main code here, to run repeatedly:
   WIFI_loop();
-  //OTA_loop();
+  OTA_loop();
   WebServer_loop();
   mdns_loop();
   MQTT_Loop();
+  IO_loop();
 }
